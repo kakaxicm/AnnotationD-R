@@ -3,10 +3,13 @@ package com.qicode.annotationdr;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qicode.annotationdr.runtimeannotation.ClassInfo;
 import com.qicode.annotationdr.runtimeannotation.FieldInfo;
+import com.qicode.annotationdr.runtimeannotation.InjectOnClick;
 import com.qicode.annotationdr.runtimeannotation.InjectView;
 import com.qicode.annotationdr.runtimeannotation.MethodInfo;
 import com.qicode.annotationdr.runtimeannotation.RuntimeAnnotationClass;
@@ -30,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
         RuntimeInjector.inject(this);
         testTv.setText("动态注入测试");
         testRuntimeAnnotation();
+    }
+
+    @InjectOnClick({R.id.tv})
+    public void testTvClick(){
+        Toast.makeText(this, "hello, tv", Toast.LENGTH_SHORT).show();
+    }
+
+    @InjectOnClick({R.id.btn})
+    public void testBtnClick(View v){
+        Toast.makeText(this, "hello, btn", Toast.LENGTH_SHORT).show();
     }
 
     /**
