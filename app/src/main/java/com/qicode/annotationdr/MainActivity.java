@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.qicode.annotationdr.runtimeannotation.ClassInfo;
 import com.qicode.annotationdr.runtimeannotation.FieldInfo;
+import com.qicode.annotationdr.runtimeannotation.InjectView;
 import com.qicode.annotationdr.runtimeannotation.MethodInfo;
 import com.qicode.annotationdr.runtimeannotation.RuntimeAnnotationClass;
 
@@ -16,11 +17,18 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+    /**
+     * 动态注入测试
+     */
+    @InjectView(R.id.tv)
+    private TextView testTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RuntimeInjector.inject(this);
+        testTv.setText("动态注入测试");
         testRuntimeAnnotation();
     }
 
@@ -65,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 sb.append("age: ").append(methodInfo.age()).append("\n");
             }
         }
-        TextView tv = (TextView) findViewById(R.id.tv);
-        tv.setText(sb.toString());
+        testTv.setText(sb.toString());
         Log.e("tag", sb.toString());
 
     }
