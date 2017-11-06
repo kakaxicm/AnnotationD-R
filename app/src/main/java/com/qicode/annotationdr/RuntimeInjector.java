@@ -3,10 +3,13 @@ package com.qicode.annotationdr;
 import android.app.Activity;
 import android.view.View;
 
+import com.qicode.annotationdr.runtimeannotation.InjectContentView;
+import com.qicode.annotationdr.runtimeannotation.InjectContentViewAnnotationProcessor;
 import com.qicode.annotationdr.runtimeannotation.InjectOnclickAnnotationProcessor;
 import com.qicode.annotationdr.runtimeannotation.InjectViewAnnotationProcessor;
 import com.qicode.annotationdr.runtimeannotation.ProcessorInterface;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -21,7 +24,8 @@ public class RuntimeInjector {
     //支持的注解处理器
     private static List<? extends ProcessorInterface<? extends AnnotatedElement>> mProcesses = Arrays.asList(
             new InjectViewAnnotationProcessor(),
-            new InjectOnclickAnnotationProcessor()
+            new InjectOnclickAnnotationProcessor(),
+            new InjectContentViewAnnotationProcessor()
     );
 
     /**
@@ -38,10 +42,12 @@ public class RuntimeInjector {
      * @param rootView
      */
     public static void inject(Object obj, View rootView){
+        final Class clazz = obj.getClass();
+        //TODO contentView注入
+        process(obj, clazz, rootView);
         //Field注入
         //1.拿到field列表
         //2.遍历field列表，做process
-        final Class clazz = obj.getClass();
         Field[] fields = clazz.getDeclaredFields();
         for(Field field : fields){
             process(obj, field, rootView);

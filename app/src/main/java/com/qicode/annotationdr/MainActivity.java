@@ -1,5 +1,6 @@
 package com.qicode.annotationdr;
 
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.qicode.annotationdr.runtimeannotation.ClassInfo;
 import com.qicode.annotationdr.runtimeannotation.FieldInfo;
+import com.qicode.annotationdr.runtimeannotation.InjectContentView;
 import com.qicode.annotationdr.runtimeannotation.InjectOnClick;
 import com.qicode.annotationdr.runtimeannotation.InjectView;
 import com.qicode.annotationdr.runtimeannotation.MethodInfo;
@@ -18,7 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-
+@InjectContentView(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
     /**
      * 动态注入测试
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
         RuntimeInjector.inject(this);
         testTv.setText("动态注入测试");
         testRuntimeAnnotation();
@@ -90,4 +92,5 @@ public class MainActivity extends AppCompatActivity {
         Log.e("tag", sb.toString());
 
     }
+
 }
